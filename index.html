@@ -126,7 +126,7 @@
         fetch(`https://wttr.in/${loc.weather}?format=%t`)
           .then(res => res.text())
           .then(celsius => {
-            fetch(`https://wttr.in/${loc.weather}?format=%f`)
+            fetch(`https://wttr.in/${loc.weather}?format=%Tf`)
               .then(res => res.text())
               .then(fahrenheit => {
                 document.getElementById(`weather-${loc.city}`).innerText = `${celsius} (${fahrenheit})`;
