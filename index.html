@@ -92,6 +92,7 @@
   </div>
   <div id="timer">00:00</div>
   <button onclick="startTimer()">Start</button>
+  <button onclick="stopTimer()">Stop</button>
 
   <h2>Alarm</h2>
   <input type="time" id="alarmTime">
@@ -208,6 +209,10 @@
           updateTimerDisplay();
         }
       }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
     }
 
     // Alarm
