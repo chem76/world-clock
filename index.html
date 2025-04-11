@@ -151,6 +151,7 @@
     // Stopwatch
     let stopwatchInterval;
     let stopwatchSeconds = 0;
+    let isRunning = false;
 
     function updateStopwatch() {
       const hours = String(Math.floor(stopwatchSeconds / 3600)).padStart(2, '0');
@@ -160,17 +161,22 @@
     }
 
     function startStopwatch() {
-      stopwatchInterval = setInterval(() => {
-        stopwatchSeconds++;
-        updateStopwatch();
-      }, 1000);
+      if (!isRunning) {
+        isRunning = true;
+        stopwatchInterval = setInterval(() => {
+          stopwatchSeconds++;
+          updateStopwatch();
+        }, 1000);
+      }
     }
 
     function stopStopwatch() {
       clearInterval(stopwatchInterval);
+      isRunning = false;
     }
 
     function resetStopwatch() {
+      stopStopwatch();
       stopwatchSeconds = 0;
       updateStopwatch();
     }
