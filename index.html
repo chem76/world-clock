@@ -86,8 +86,11 @@
   <button onclick="resetStopwatch()">Reset</button>
 
   <h2>Timer</h2>
-  <input type="number" id="timerInput" placeholder="Seconds" />
-  <div id="timer">00</div>
+  <div>
+    <input type="number" id="minutesInput" placeholder="Minutes" />
+    <input type="number" id="secondsInput" placeholder="Seconds" />
+  </div>
+  <div id="timer">00:00</div>
   <button onclick="startTimer()">Start</button>
 
   <h2>Alarm</h2>
@@ -184,13 +187,25 @@
     // Timer
     let timerInterval;
     function startTimer() {
-      let time = parseInt(document.getElementById('timerInput').value);
+      const minutes = parseInt(document.getElementById('minutesInput').value) || 0;
+      const seconds = parseInt(document.getElementById('secondsInput').value) || 0;
+      let totalSeconds = minutes * 60 + seconds;
+
+      function updateTimerDisplay() {
+        const m = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+        const s = String(totalSeconds % 60).padStart(2, '0');
+        document.getElementById('timer').innerText = `${m}:${s}`;
+      }
+
+      updateTimerDisplay();
+      clearInterval(timerInterval);
       timerInterval = setInterval(() => {
-        if (time <= 0) {
+        if (totalSeconds <= 0) {
           clearInterval(timerInterval);
           alert("Time's up!");
         } else {
-          document.getElementById('timer').innerText = time--;
+          totalSeconds--;
+          updateTimerDisplay();
         }
       }, 1000);
     }
