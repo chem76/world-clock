@@ -123,10 +123,14 @@
 
     function fetchWeather() {
       timeZones.forEach(loc => {
-        fetch(`https://wttr.in/${loc.weather}?format=%t+%f`)
+        fetch(`https://wttr.in/${loc.weather}?format=%t`)
           .then(res => res.text())
-          .then(temp => {
-            document.getElementById(`weather-${loc.city}`).innerText = temp;
+          .then(celsius => {
+            fetch(`https://wttr.in/${loc.weather}?format=%f`)
+              .then(res => res.text())
+              .then(fahrenheit => {
+                document.getElementById(`weather-${loc.city}`).innerText = `${celsius} (${fahrenheit})`;
+              });
           });
       });
     }
