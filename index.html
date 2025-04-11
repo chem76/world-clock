@@ -122,18 +122,20 @@
     }
 
     function fetchWeather() {
-      timeZones.forEach(loc => {
-        fetch(`https://wttr.in/${loc.weather}?format=%t`)
+  timeZones.forEach(loc => {
+    // Celsius
+    fetch(`https://wttr.in/${loc.weather}?format=%t`)
+      .then(res => res.text())
+      .then(celsius => {
+        // Fahrenheit (use &u to force units)
+        fetch(`https://wttr.in/${loc.weather}?format=%t&u`)
           .then(res => res.text())
-          .then(celsius => {
-            fetch(`https://wttr.in/${loc.weather}?format=%f`)
-              .then(res => res.text())
-              .then(fahrenheit => {
-                document.getElementById(`weather-${loc.city}`).innerText = `${celsius} (${fahrenheit})`;
-              });
+          .then(fahrenheit => {
+            document.getElementById(`weather-${loc.city}`).innerText = `${celsius} (${fahrenheit})`;
           });
       });
-    }
+  });
+}
 
     setInterval(() => {
       updateTime();
